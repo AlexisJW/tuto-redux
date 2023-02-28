@@ -1,8 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CartItem from './CartItem';
+import { openModal } from './features/modal/modalSlice';
 
 const CartContainer = () => {
+  const dispatch = useDispatch();
   const { cartItems, total, amount } = useSelector((state) => state.cart);
 
   if (amount < 1) {
@@ -16,6 +18,7 @@ const CartContainer = () => {
       </section>
     );
   }
+  /* eslint-disable */
   return (
     <section className="cart">
       {/* cart header */}
@@ -35,11 +38,18 @@ const CartContainer = () => {
             {' '}
             <span>
               $
-              {total}
+              {total.toFixed(2)}
             </span>
           </h4>
         </div>
-        <button className="btn clear-btn">clear cart</button>
+        <button
+          className="btn clear-btn"
+          onClick={() => {
+            dispatch(openModal());
+          }}
+        >
+          clear cart
+        </button>
       </footer>
     </section>
   );
